@@ -35,6 +35,36 @@ var Node = function(value) {
   return { value: value, next: null };
 };
 
-var hasCycle = function(linkedList) {
-  // TODO: implement me!
+var hasCycle = function(node) {
+  let it1 = node;
+  let it2 = node;
+  while (it1 !== null) {
+    it1 = it1.next;
+    if (it2 && it2.next) {
+      it2 = it2.next.next
+    } else {
+      it2 = null;
+    }
+    if (it2 && it2.next === it1) {
+      return true;
+    }
+  }
+  return false;
 };
+
+
+var nodeA = Node('A')
+
+var nodeB = nodeA.next = Node('B')
+
+var nodeC = nodeB.next = Node('C')
+
+var nodeD = nodeC.next = Node('D')
+
+var nodeE = nodeD.next = Node('E')
+
+console.assert(hasCycle(nodeA) === false); // => fals
+
+nodeE.next = nodeB
+
+console.assert(hasCycle(nodeA) === true); // => true
